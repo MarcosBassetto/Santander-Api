@@ -1,18 +1,20 @@
 package me.dio.controller.dto;
 
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import me.dio.domain.model.User;
-
 import java.util.List;
-
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.toList;
 
 public record UserDto(
         Long id,
-        String name,
-        AccountDto account,
-        CardDto card,
+        @NotBlank @Size(max = 100) String name,
+        @NotNull AccountDto account,
+        @NotNull CardDto card,
         List<FeatureDto> features,
         List<NewsDto> news) {
 
@@ -37,6 +39,4 @@ public record UserDto(
         model.setNews(ofNullable(this.news).orElse(emptyList()).stream().map(NewsDto::toModel).collect(toList()));
         return model;
     }
-
 }
-
